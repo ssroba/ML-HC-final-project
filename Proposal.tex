@@ -1,0 +1,163 @@
+\documentclass[twoside,11pt]{article}
+
+% Any additional packages needed should be included after jmlr2e.
+% Note that jmlr2e.sty includes epsfig, amssymb, natbib and graphicx,
+% and defines many common macros, such as 'proof' and 'example'.
+%
+% It also sets the bibliographystyle to plainnat; for more information on
+% natbib citation styles, see the natbib documentation, a copy of which
+% is archived at http://www.jmlr.org/format/natbib.pdf
+
+\usepackage{jmlr2e}
+%\usepackage{parskip}
+
+% Definitions of handy macros can go here
+\newcommand{\dataset}{{\cal D}}
+\newcommand{\fracpartial}[2]{\frac{\partial #1}{\partial  #2}}
+% Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
+
+% Short headings should be running head and authors last names
+\ShortHeadings{95-845: MLHC Proposal}{Sroba}
+\firstpageno{1}
+
+\begin{document}
+
+\title{Using Microsoft Kinect Data to Monitor Elderly Patients in the Home}
+
+\author{\name Steve Sroba \email ssroba@andrew.cmu.edu \\
+       \addr Heinz College\\
+       Carnegie Mellon University\\
+       Pittsburgh, PA, United States} 
+
+\maketitle
+
+
+\section{Proposal Details} \label{details}
+
+
+\subsection{What is your proposed analysis? What are the likely outcomes?}
+
+  The main objectives of this analysis are to improve on past efforts of classifying physical activity recorded by Microsoft Kinect, and to find new ways to analyze performance on common clinical assessments of elderly patients such as gait, balance, and strength. I will attempt to identify markers for performance so that individual performance can be assessed over time, and compared with individuals of similar demographics. The likely outcomes are similar or improved accuracy for classification of different activities, and the creation of new metrics that can be extracted from Kinect activity data to assess health status of elderly patients.
+
+\subsection{Why is your proposed analysis important?}
+
+Comprehensive Geriatric Assessment (http://www.uptodate.com/contents/comprehensive-geriatric-assessment)
+o	Geriatric conditions such as functional impairment and dementia are common and frequently unrecognized or inadequately addressed in older adults. Identifying geriatric conditions by performing a geriatric assessment can help clinicians manage these conditions and prevent or delay their complications.
+o	Several different models for CGA have been implemented in various health care settings. An increasing number of CGA programs are relying on post-discharge assessment due to the decrease in length of hospital stay. Furthermore, while most of the early CGA programs focused on restorative or rehabilitative goals (tertiary prevention), many newer programs are aimed at primary and secondary prevention
+o	An older adult's functional status can be assessed at three levels: basic activities of daily living (BADLs), instrumental or intermediate activities of daily living (IADLs), and advanced activities of daily living (AADLs).
+o	Scales that measure functional status at each of these levels have been developed and validated. The Vulnerable Elders Scale-13 (VES-13) is a 13-item screening tool that is based upon age, self-rated health, and the ability to perform functional and physical activities [6-8]. It identifies populations of community-dwelling elders at increased risk for functional decline or death over a five-year period (table 2). The VES-13 can be self-administered or administered by nonmedical personnel over the telephone or at an office visit in less than five minutes.
+o	Questions that ask about specific BADL and IADL functions have also been incorporated into a variety of more generic, health-related quality-of-life instruments (eg, the Medical Outcomes Study Short-form and its shorter version, the SF-12; the PROMIS family of instruments) [7,9-11]. Two commonly used indices are the Katz index for ADLs (table 3) and the Lawton scale for IADLs (table 4). Some AADLs (eg, exercise and leisure time physical activity) can be ascertained by using standardized instruments.
+o	Gait speed - In addition to measures of ADLs, gait speed alone predicts functional decline and early mortality in older adults [12]. Assessing gait speed in clinical practice may identify patients who need further evaluation, such as those at increased risk of falls. Additionally, assessing gait speed may help identify frail patients who might not benefit from treatment of chronic asymptomatic diseases such as hypertension. For example, elevated blood pressure in individuals age 65 and older was associated with increased mortality only in individuals with a walking speed ???0.8 meters/second (measured over 6 meters or 20 feet) [13].
+o	Falls/imbalance - Approximately one-third of community-dwelling persons age 65 years and one-half of those over 80 years of age fall each year. Patients who have fallen or have a gait or balance problem are at higher risk of having a subsequent fall and losing independence. An assessment of fall risk should be integrated into the history and physical examination of all geriatric patients (algorithm 1). (See "Falls in older persons: Risk factors and patient evaluation", section on 'Falls risk assessment' and "Neurologic gait disorders of elderly people".)
+o	Home geriatric assessment and acute geriatric care units have been shown to be consistently beneficial for several health outcomes. By contrast, the data are conflicting for post-hospital discharge, outpatient geriatric consultation, and inpatient geriatric consultation services. Multiple meta-analyses have found home assessments to be consistently effective in reducing functional decline as well as overall mortality [1,22-24]. As an example, a meta-analysis of 21 randomized trials found that multidimensional home visit programs were effective in reducing functional decline if a clinical examination was conducted (odds ratio [OR] 0.64, CI 0.48-0.87) and in reducing mortality in patients age ???77 years old (OR 0.74, 95 percent CI 0.58-0.94) [24]. However, the home visits did not significantly prevent nursing home admissions (OR 0.86, CI 0.68-1.10).
+
+
+\subsection{How will your analysis contribute to existing work? Provide references.}
+
+o	Kinect 
+???	3D camera and a microphone allow virtual appointments, reducing transportation costs, service costs, and risk of infection
+???	Daily physical and mental assessments, physical therapy and exercise that eliminate the need for frequent check-ups and office visits, and notify clinicians of declining health or risk of hospitalization
+???	Tailored games using Kinect can encourage an active lifestyle or provide motivation for otherwise tedious rehabilitation exercises.
+o	Monitoring Health
+???	Home healthcare can help the elderly or those with health impairments to preserve an independent lifestyle in their own home and thus avoid the costs of specialist care facilities.
+???	Monitoring of normal activities, recognition of abnormal behavior, and detection of emergency situations can assure patient safety. 
+???	Fall detection
+???	Tremors and freezing in gait
+o	Screening and Rehab
+???	The assessment of posture and body movement can provide important information for screening and rehabilitation applications. 
+???	Detect reduction in range of motion after surgery
+???	Gait and movement assessment for risk of falling and to predict patients' ability to cope with daily practice after discharge from hospital. 
+???	Presenting rehabilitation exercises as a serious game can motivate patients to perform otherwise repetitive exercises. 
+.	https://e-space.mmu.ac.uk/600402/1/Thesis.pdf
+o	SPPB: Guided interactive rehabilitation allows online correction of movements (e.g., to avoid incorrect body posture, which would make a training exercise less effective).
+
+o	J. Guralnik, E. Simonsick, L. Ferrucci, R. Glynn, L. Berkman, D. Blazer, P. Scherr, and R. Wallace. A short physical performance battery assessing lower extremity function: Association with self-reported disability and prediction of mortality and nursing home admission. Gerontology, 49(2):85 - 93, March 1994.
+o	G. Alankus, A. Lazar, M. May, and C. Kellecher. Towards customizable games for stroke rehabilitation. SIGCHI Conference on Human Factors in Computing Systems, pages 2113 - 2122, 2010.
+o	D. M. Brennan, S. Mawson, and S. Brownsell. Advanced Technologies in Rehabilitation, volume 145, chapter Tele-rehabilitation: enabling the remote delivery of healthcare, rehabilitation and self management. IOS Press, June 2009.
+o	Paula Rego, Pedro Miguel Moreira, and Luis Paulo Reis. Serious games for rehabilitation: A survey and a classification towards a taxonomy. In 5th Iberian Conference Information Systems and Technologies (CISTI), pages 1 - 6, June 2010.
+
+\subsection{Describe the data. Please also define Y outcome(s), U treatment, V covariates, W population as applicable.}
+
+.	D. Leightley, M. H. Yap, J. Coulson, Y. Barnouin and J. S. McPhee, "Benchmarking human motion analysis using kinect one: An open source dataset," 2015 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA), Hong Kong, 2015, pp. 1-7.
+.	Manchester Metropolitan University
+.	K3Da | A Kinect Healthcare Dataset: Benchmarking Healthcare Applications
+.	K3Da (Kinect 3D active) is a realistic clinically relevant human action dataset containing skeleton and depth data and associated participant information. With associated marker indicating noisy/outlier frames.
+.	This dataset contains 54 participants, 26 young (<=59 years of age), 14 elderly (=>61 years of age) and 14 British Masters Athletes (=>61 years of age). 
+.	Activities are based on the Short Physical Performance Battery (Guralnik et al., 2000) including: two leg jump, walking, sit to stand, and balance.
+.	All sequences have been recorded in a lab-based indoor environment with a single Kinect One 3D sensor, fixed to a tripod and motions performed directly infront of the device. The Microsoft Kinect One sensor provided a 512 × 424 depth image up to 30fps. 
+.	Format
+o	Raw skeleton files (text file) containing the user position and pose in real world space
+o	Depth files are raw .bin files, with person index
+o	Matlab skeletal file of 25 predefined joints (X, Y, Z coordinates) as defined by Microsoft Kinect SDK, as well as the tracking state of both hands, and RGB mapped coordinates and tracking status
+o	In the real world we have to handle noisy data, most notably within the health domain. Depth data is very noisy with partial occlusion, however we have provided it for visual reference.
+o	Age, gender, weight, height and an indicator of the type of participant (1=young, 2=British Masters' Athlete and 3=old).
+o	SPPB protocol. All participants are asked to undertake the actions in their own time and in their own style. 
+o	01	Balance (2-leg Open Eyes)
+o	02	Balance (2-leg Closed Eyes)
+o	03	Chair Rise
+o	04	Jump (Minimum)
+o	05	Jump (Maximum)
+o	06	One-Leg Balance (Closed Eyes)
+o	07	One-Leg Balance (Open Eyes)
+o	08	Semi-Tandem Balance
+o	09	Tandem Balance
+o	10	Walking (Towards the Kinect)
+o	11	Walking (Away from the Kinect)
+o	12	Timed-Up-and-Go
+o	13	Hopping
+o	A warning label/code is assigned when a participant encountered difficult in executing the trial. It is up to the user of the dataset to decide if they want to include it
+???	01	Participant requested termination of trial.
+???	02	Healthcare professional terminates trial.
+
+
+\subsection{What evaluation measures are appropriate for the analysis? Which measures will you use?}
+
+.	Classification accuracy
+.	Performance prediction accuracy
+.	ROC
+
+
+\subsection{What study design, pre-processing, and machine learning methods do you intend to use? Justify that the analysis is of appropriate size for a course project.}
+
+.	Initial Objective: localize the skeleton in relation to the hip center of the first frame (Github)
+.	Data wrangling
+.	Signal processing
+o	signal package
+o	Reduce/smooth data by filtering
+o	Sampling rate
+o	time-frequency transforms or time-frequency distributions to represent signals in a form that have both time and frequency info, which by the uncertainty principle there is a trade off between
+o	Short-time fourier transform or fractional fourier transform, wavelet transforms and chirplet transforms
+o	Best to model signals with a function or stochastic process
+o	Fourier transform of a signal's autocorrelation function (correlation of signal with own past)
+o	Linear canonical transformations
+o	Knowledge of which frequencies are important 
+.	Feature Extraction/Engineering
+o	Matlab code provided to visualize data and profile joints as well as measure distance traveled
+o	X, y, z coordinates of joints over varying sliding time windows
+o	Identify repeating patterns
+.	Feature Selection/Model Tuning
+o	Cross validation
+o	Random Forest
+.	Analysis
+o	Classify movements
+o	Analyze form/posture/performance
+o	ANN, genetic algorithms, regression, k-NN, Bayesian net, DT, ensembles, combinations, SVM
+.	Size of project
+o	will go through each step, making sure to complete and not spend too much time/effort on one step
+o	If time permits, will repeat and optimize, and look into Microsoft Azure and TensorFlow
+o	my only experience is with movement classification from accelerometers
+
+
+\subsection{What are possible limitations of the study?}
+
+.	Not enough subjects/data
+.	Credibility
+.	Too controlled of a data collection environment to be applicable in the real world
+
+
+\bibliography{}
+%\appendix
+%\section*{Appendix A.}
+%Some more details about those methods, so we can actually reproduce them.
+
+\end{document}
