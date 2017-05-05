@@ -1,0 +1,204 @@
+\documentclass[twoside,11pt]{article}
+
+% Any additional packages needed should be included after jmlr2e.
+% Note that jmlr2e.sty includes epsfig, amssymb, natbib and graphicx,
+% and defines many common macros, such as 'proof' and 'example'.
+%
+% It also sets the bibliographystyle to plainnat; for more information on
+% natbib citation styles, see the natbib documentation, a copy of which
+% is archived at http://www.jmlr.org/format/natbib.pdf
+
+\usepackage{jmlr2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{parskip}
+
+% Definitions of handy macros can go here
+\newcommand{\dataset}{{\cal D}}
+\newcommand{\fracpartial}[2]{\frac{\partial #1}{\partial  #2}}
+% Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
+
+% Short headings should be running head and authors last names
+\ShortHeadings{95-845: MLHC Proposal}{Sroba}
+\firstpageno{1}
+
+\begin{document}
+
+\title{Using Microsoft Kinect to Monitor Elderly Patients in the Home}
+
+\author{\name Steve Sroba \email ssroba@andrew.cmu.edu \\
+       \addr Heinz College\\
+       Carnegie Mellon University\\
+       Pittsburgh, PA, United States} 
+
+\maketitle
+
+\begin{abstract}
+
+The main objectives for this analysis were to improve on past efforts of classifying physical activity recorded by Microsoft Kinect, to find new ways to analyze performance on common clinical assessments of elderly patients such as gait, balance, and strength, and to predict type of participant performing the movement. Classification of activity and type of participant were achieved using ensembles of classification trees trained on movement data collected by the Kinect, taken from the K3DA dataset. The classification accuracies achieved were 75.84% and 93.26% for activity and participant type, respectively. This is useful for identifying clinically relevant movements performed without explicit instruction (such as while playing Kinect games, or through background data collection) and for determining fitness level solely based on performing these movements, without any other information about the person performing the movement. Establishing new ways to analyze performance on common clinical assessments was not achieved, and thus is a future goal for this work.
+
+\end{abstract}
+
+\section{Introduction}
+
+The Kinect is a 3D camera and microphone that can lead to change in health care such as increased virtual appointments, reduced transportation costs, service costs, and risk of infection. Daily assessments, physical therapy and exercise cam eliminate the need for frequent check-ups and office visits, and notify clinicians of declining health or risk of hospitalization. Games using Kinect can encourage active lifestyle or provide motivation for rehabilitation exercises(Phlmann et al., 2016).
+
+Around 1/3 of patients older than 65 and 1/2 older than 80 fall each year, and patients who have fallen, or have a gait or balance problem are at higher risk of falling again and losing their independence (Katherine T Ward and David B Reuben, 2016). On top of that, gait speed alone predicts functional decline and early mortality in older adults (Katherine T Ward and David B Reuben, 2016). For these reasons, assessing gait and balance may identify patients who need further evaluation.
+
+Performing physical assessments can help clinicians manage conditions typical of aging adults and prevent or delay complications. Functional status can be assessed at three levels: basic activities of daily living (BADLs), instrumental/intermediate activities of daily living (IADLs), and advanced activities of daily living (AADLs). Scales that measure functional status at each of these levels have been developed and validated. The Vulnerable Elders Scale-13 (VES-13) is a 13-item screening tool that is based upon age, self-rated health, and the ability to perform functional and physical activities. The Katz index for ADLs and the Lawton scale for IADLs are also common indices. Some AADLs can be ascertained by using standardized instruments, but AADLs are more complex, and less elders can complete them. The NIH toolbox is a collection of assessments, accompanied by a study of performance by different demographics for comparison of individual performance. Meta-analyses have found home assessments of this type to be effective in reducing functional decline as well as overall mortality (Katherine T Ward and David B Reuben, 2016). 
+
+Health care in the United States is extremely expensive for the quality of care that is given, and the elderly population accounts for a majority of health care spending. On top of that, the aging population is only going to make this crisis worse. Taking all of this into account, I believe this topic is extremely important analysis because it can lead to elimination of unnecessary office visits, prevention of adverse health events, and increased quality of care for patients, leading to higher reimbursements for physicians once quality based reimbursement is in effect.
+
+\section{Background} \label{background}
+
+Ensembles of decision trees were used in this study. Decision trees provide comprehensible models when trees are not too big, but usually are not the most accurate. Ensembles are a set of learned models whose individual decisions are combined in some way to make predictions for new instances. To get diverse classifiers, bagging is used to choose different subsamples of the training set, while boosting uses different probability distributions over the training instances. Random forests choose different features and subsamples. Bagging and random forests work mainly by reducing variance, while boosting works by primarily reducing bias in the early stages, and reducing variance in the latter stages.
+
+Splits on nominal features have one branch per value, while splits on numeric features use a threshold. The key is that the simplest tree that classifies the training instances accurately will work well on previously unseen instances. Entropy is a measure of uncertainty associated with a random variable: 
+
+\[
+	H(Y) = - \sum_{y\in \mathcal{Y}} p(y) log_2 p(y)
+\]
+
+Conditional entropy is:
+
+\[
+	H(Y|X) = \sum_{x\in \mathcal{X}} p(X=x) H(Y|X=x)
+\]
+
+where
+
+\[
+	H(Y|X=x) = \sum_{y\in \mathcal{Y}} p(Y=y|X=x) log_2 P(Y=y|X=x)
+\]
+
+Information gain selects the split S that most reduces the conditional entropy of Y for training set D: 
+
+\[
+    InfoGain(D,S) = H_D(Y) – H_D(Y|S).
+\]
+
+Stop when all of the given subset of instances are the same class or we’ve exhausted all candidate splits.
+
+\begin{enumerate}
+    \item MakeSubtree(set of training instances D)
+    \begin{enumerate}
+        \item C = DetermineCandidateSplits(D)
+        \item if stopping criteria met
+        \begin{enumerate}
+            \item make a leaf node N
+            \item determine class label/probabilities for N
+        \end{enumerate}
+        \item else
+        \begin{enumerate}
+            \item make an internal node N
+            \item S = FindBestSplit(D, C)
+            \item for each outcome k of S
+            \begin{enumerate}
+                \item Dk = subset of instances that have outcome k
+                \item kth child of N = MakeSubtree(Dk)
+            \end{enumerate}
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+Run this subroutine for each numeric feature at each node of DT induction.
+
+\begin{enumerate}
+    \item DetermineCandidateNumericSplits(set of training instances D, feature Xi)
+    \begin{enumerate}
+        \item C = {} // initialize set of candidate splits for feature Xi
+        \item S = partition instances in D into sets s1 … sV where the instances in each set have the same value for Xi
+        \item let vj denote the value of Xi for set sj
+        \item sort the sets in S using vj as the key for each sj
+        \item for each pair of adjacent sets sj, sj+1 in sorted S
+        \begin{enumerate}
+            \item if sj and sj+1 contain a pair of instances with different class labels
+            \item add candidate split Xi ? (vj + vj+1)/2 to C
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+Out-of-bag predictor importance estimates by permutation measure how influential the predictor variables in the model are at predicting the response. The influence of a predictor increases with the value of this measure. If a preditor is influential, then permuting its values should affect the model error.
+
+\section{Classification Tree Ensemble} \label{model}
+
+Statistics and Machine Learning Toolbox, Optimization Toolbox, 
+
+`` Code is available at \url{https://github.com/ssroba/ML-HC-final-project/} ''
+
+\section{Experimental Setup} \label{experiment}
+
+The first step is to localize the skeleton in relation to the hip center of the first frame of the provided data with the code provided along with the data set (Leightley et al., 2015). Data wrangling will then take place to get the data in the correct form to be analyzed. Signal processing such as filtering, variable sampling rates, and transformations to the frequency domain will follow, which overlaps with the next step: feature extraction/engineering. Again, Matlab code has been provided with the data set to visualize the data and profile joints as well as measure distance traveled. The x, y, and z coordinates of the joints over varying time windows will be the basis for most of the features. Identify repeating patterns in the activities will help engineer new features that have not been considered in the past. Next, feature selection/model tuning using k-fold ross validation will occur.
+
+\subsection{Cohort Selection}
+
+The dataset was created by Manchester Metropolitan University. It is titled K3Da, A Kinect Healthcare Dataset: Benchmarking Healthcare Applications. It is a realistic clinically relevant human action dataset containing skeleton and depth data and associated participant information. Activities are based on the Short Physical Performance Battery (Guralnik et al., 1994), and were recorded in a lab-based indoor environment with a single Kinect One 3D sensor, fixed to a tripod and motions performed directly in front of the device.
+
+Population: 54 participants, 26 young (<=59 years of age), 14 elderly (>=61 years of age) and 14 British Masters Athletes.
+
+The different activities are below.
+01 = Balance (2-leg Open Eyes)
+02 = Balance (2-leg Closed Eyes)
+03 = Chair Rise
+04 = Jump (Minimum)
+05 = Jump (Maximum)
+06 = One-Leg Balance (Closed Eyes)
+07 = One-Leg Balance (Open Eyes)
+08 = Semi-Tandem Balance
+09 = Tandem Balance
+10 = Walking (Towards the Kinect)
+11 = Walking (Away from the Kinect)
+12 = Timed-Up-and-Go
+13 = Hopping (one-leg)
+
+\subsection{Data Extraction}
+
+CSV files contain 25 predefined joints (X, Y, Z coordinates) defined by the Kinect SDK. The age, gender, weight, height and an indicator of the type of participant (1=young, 2=British Masters’ Athlete and 3=old) was provided for each in a separate CSV file.
+
+\subsection{Feature Choices}
+
+Signal Processing Toolbox, MoCap Toolbox
+
+\subsection{Comparison Methods}
+
+Classification Learner
+
+There are tradeoffs between several characteristics of algorithms, such as Speed of training, Memory usage, Predictive accuracy on new data, and Transparency or interpretability, meaning how easily you can understand the reasons an algorithm makes its predictions.
+
+Independent Test Set
+Cross-validation error
+Out-of-bag error for bagged decision trees.
+
+\subsection{Evaluation Criteria}
+
+Classification accuracy is adequate in this case because there is not a large class skew and there are not different misclassification costs. ROC and PR curves assume binary classification, so it would have been tough to do either.
+
+\section{Results} \label{results}
+
+\subsection{Results on Exercises} 
+
+\subsection{Results on Groups} 
+
+\section{Discussion and Related Work}
+
+Home healthcare can help elderly live an independent lifestyle in their own home and avoid costs of specialist facilities. Monitoring of normal activities, recognition of abnormal behavior, and detection of emergency situations can assure patient safety. Some examples that have been implemented are fall detection, as well as tremors and freezing in gait (Leightley, 2015). Also, the assessment of posture and body movement can provide important information for screening and rehabilitation. Some examples that have been implemented are detection of reduction in range of motion after surgery, gait and movement assessment for risk of falling and to predict patients’ ability to cope with daily practice after discharge from hospital, and presenting rehabilitation exercises as a game to motivate patients to perform otherwise repetitive exercises (Alankus et al., 2010; Brennan et al., 2009; Rego et al., 2010).
+Leightley (2015) had many similarities, however this analysis is attempting to improve upon it, and create new metrics to assess performance. For classification of the type of movement, new features will be engineered and new classification algorithms will be tested in an attempt to improve accuracy. For the goal of assessing individual performance, new metrics will be created by using the scales mentioned above so that individuals can be compared to those of similar demographics. The biggest difference is that this assessment will include an attempt to classify the type of participant performing the activity.
+Combining these three tasks would make home-based assessment of elderly patients possible without any time or resources contributed by health care providers, leading to preventative care while decreasing the cost of care.
+One limitation is that there are not enough subjects or data recored in order to accurate results. Another is the credibility of the creation of the data set. Lastly, the data collection environment may have been too controlled for the results to be applicable in the real world.
+
+\section{Conclusion} 
+
+\bibliography{paper}
+
+\appendix
+\section*{Appendix A.}
+
+Group Classification Learner Results
+
+Exercise Classification Learner Results
+
+Group Model Results
+
+Exercise Model Results
+
+\end{document}
